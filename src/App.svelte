@@ -10,7 +10,7 @@
   </header>
   <section class="board">
     {#each columns as column}
-      <TaskColumn name={column} />
+      <TaskColumn name={column} tasks={['plh']}/>
     {/each}
   </section>
   <footer>Pedro T. Hernández</footer>
@@ -43,7 +43,7 @@
   }
   .board {
     display: grid;
-    grid-template-columns: 24% 24% 24% 24%;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-template-rows: 1fr;
     grid-column-gap: 1em;
     padding: 1rem;

@@ -1,7 +1,15 @@
 <script>
-  import TaskRow from "./TaskRow.svelte";
+  import Task from "./Task.svelte";
   export let name;
+  export let tasks = ["PlaceHolder"];
+  let taskList = tasks;
   console.log(name);
+  function addTask() {
+    let newTask = prompt('Que quieres añadir:');
+    console.log(newTask);
+    taskList = [...taskList, newTask];
+
+  }
 </script>
 
 <div class="task-col">
@@ -9,9 +17,12 @@
     <h3>{name}</h3>
   </div>
   <div class="task-col__droparea">
-    <TaskRow />
+    {#each taskList as task}
+    <Task content={task} />
+    {/each}
+    
   </div>
-  <button>
+  <button class="btn" on:click={addTask}>
     Añadir Tarea </button>
 </div>
 
@@ -22,12 +33,29 @@
     padding: 0 2ch 2ch;
     border: 1px dashed #09f;
     &__header {
-      color: $green;
-      border-bottom: 1px dashed #333;
+      color: $font-blue;
+      h3{
+        margin: 1ch auto;
+      }
     }
     &__droparea {
-      background: rgba(51, 51, 51, .75);
-      height: 100%;
+      padding-top: 1ch;
+      margin-top: 8px;
+      background: $bg-board;
+      height: $column-height;
+      //overflow-y: scroll;
+    }
+    .btn {
+      width: 100%;
+      margin: 0;
+      background: $bg-button;
+      color: $font-white;
+      cursor: pointer;
+      border:none;
+      transition: background 0.2s ease-out;
+      &:hover, &:focus {
+        background: $hover-blue;
+      }
     }
   }
 </style>

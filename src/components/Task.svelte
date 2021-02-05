@@ -1,0 +1,23 @@
+<script>
+  export let content ='';
+  console.log(content);
+</script>
+
+<div class="task" draggable="true">{content}</div>
+
+<style lang="scss">
+  @import '../sass/variables';
+  .task {
+    display: flex;
+  flex-direction: column;
+    padding: 1rem;
+    width: 95%;
+  margin: 0 auto 1ex auto;
+    color: $font-black;
+    border-radius: 4px;
+background-color: $bg-white;
+box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+
+    cursor: draggable;
+  }
+</style>

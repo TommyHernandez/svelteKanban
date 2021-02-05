@@ -1,4 +1,11 @@
 $green: #9f9;
-$font-white: #fafaff;
+$_white: #fafaff;
+$font-white: $_white;
+$bg-white: $_white;
+$font-blue: #005288;
+$font-black: #0f0f0f;
 $bg-grey: #333;
-$bg-board: rgba(255, 255, 255, 0.5);
+$bg-board: rgba(210, 207, 207, 0.5);
+$bg-button: #005288;
+$column-height: calc(100% - 88px);
+$hover-blue: #006db3;
