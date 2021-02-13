@@ -8,7 +8,7 @@
     {
     pos: 0,
     name: "Backlog",
-    task: []
+    task: ["The Jario"]
   },
   {
     pos:1 ,
@@ -33,12 +33,19 @@
     showModal = true;
   }
   function saveTask({detail}) {
-    console.log(details);
     const {task, pos} = detail;
     const col = columns.find( e => e.pos === pos);
-    col.task = [... col.task, task]
+    col.task = [...col.task, task]
     columns = columns; 
     showModal = false;
+  }
+  function handleChangeColumn({detail}){
+    const colToRemoveTask = columns.find( e => e.pos === detail.from);
+    const colToAddTask = columns.find( e => e.pos === detail.to);
+    const oldIndex = colToRemoveTask.task.indexOf(detail.value);
+    colToRemoveTask.task.splice(oldIndex, 1);
+    colToAddTask.task = [...colToAddTask.task, detail.value];
+    columns = columns; 
   }
 </script>
 
@@ -49,7 +56,7 @@
   </header>
   <section class="board">
     {#each columns as {name, task},index}
-      <TaskColumn name={name} taskList={task} on:openModal={openModal} pos={index}/>
+      <TaskColumn name={name} taskList={task} on:openModal={openModal} pos={index} on:changeColumn={handleChangeColumn}/>
     {/each}
   </section>
   {#if showModal}

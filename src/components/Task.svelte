@@ -1,11 +1,15 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
   import { scale } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
   export let content ='';
-  console.log("A task lleva", content);
+  const dispatch = createEventDispatcher();
+  function dispatchDrag(e){
+    dispatch('handleDrag',e);
+  }
 </script>
 
-<div class="task" transition:scale="{{duration: 500, delay: 50, opacity: 0.5, start: 0.5, easing: quintOut}}" draggable="true">{content}</div>
+<div class="task" on:dragstart={dispatchDrag} transition:scale="{{duration: 500, delay: 50, opacity: 0.5, start: 0.5, easing: quintOut}}" draggable="true">{content}</div>
 
 <style lang="scss">
   @import '../sass/variables';

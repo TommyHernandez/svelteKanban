@@ -12,15 +12,32 @@
             pos
         });
   }
+  function allowDrop(ev) {
+  ev.preventDefault();
+  }
+  function handleDrag({detail}){
+    detail.dataTransfer.setData('task', detail.target.innerText);
+    detail.dataTransfer.setData('fromPos', pos);
+  }
+  function handleDrop(e){
+    e.preventDefault();
+    const fromPos= e.dataTransfer.getData('fromPos');
+    const task= e.dataTransfer.getData('task');
+    dispatch('changeColumn', {
+      from: +fromPos,
+      to: pos,
+      value: task
+    })
+  }
 </script>
 
 <div class="task-col">
   <div class="task-col__header">
     <h3>{name}</h3>
   </div>
-  <div class="task-col__droparea">
+  <div class="task-col__droparea" on:drop={handleDrop} on:dragover={allowDrop}>
     {#each taskList as task}
-    <Task content={task} />
+    <Task content={task} on:handleDrag={handleDrag} />
     {/each}
     
   </div>
