@@ -1,14 +1,17 @@
 <script>
   import Task from "./Task.svelte";
+  import { createEventDispatcher } from 'svelte';
   export let name;
-  export let tasks = ["PlaceHolder"];
-  let taskList = tasks;
-  console.log(name);
+  export let taskList = [];
+  export let pos = 0;
+  const dispatch = createEventDispatcher();
   function addTask() {
     let newTask = prompt('Que quieres añadir:');
-    console.log(newTask);
-    taskList = [...taskList, newTask];
-
+   // taskList = [...taskList, newTask];
+    dispatch('addTask', {
+            task: newTask,
+            pos
+        });
   }
 </script>
 

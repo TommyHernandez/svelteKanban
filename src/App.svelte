@@ -1,6 +1,34 @@
 <script>
   import TaskColumn from "./components/TaskColumn.svelte";
-  const columns = ["Backlog", "In Progress", "In review", "Done"];
+  import ls from './helpers/localStorageHelper.js';
+  let columns = [
+    {
+    pos: 0,
+    name: "Backlog",
+    task: []
+  },
+  {
+    pos:1 ,
+    name: "In Progress",
+    task: []
+  },
+  {
+    pos: 2,
+    name: "In review",
+    task: []
+  },
+  {
+    pos: 3,
+    name: "Done",
+    task: []
+  },
+];
+function handleTask({detail}) {
+  const {task, pos} = detail;
+  const col = columns.find( e => e.pos === pos);
+  col.task = [... col.task, task]
+  columns = columns; 
+  }
 </script>
 
 <main>
@@ -9,8 +37,8 @@
     <p>Crea tus tareas y guardalas en local</p>
   </header>
   <section class="board">
-    {#each columns as column}
-      <TaskColumn name={column} tasks={['plh']}/>
+    {#each columns as {name, task},index}
+      <TaskColumn name={name} taskList={task} on:addTask={handleTask} pos={index}/>
     {/each}
   </section>
   <footer>Pedro T. Hernández</footer>
@@ -24,7 +52,6 @@
     grid-template-rows: 200px calc(100vh - 250px) 50px;
     grid-template-columns: 100%;
     background: url("images/bg.jpg") center center no-repeat;
-    backdrop-filter: blur(8px);
     background-size: cover;
     height: 100vh;
     overflow:hidden;
@@ -48,6 +75,7 @@
     grid-column-gap: 1em;
     padding: 1rem;
     background: $bg-board;
+    backdrop-filter: blur(10px);
   }
   footer {
     color: $font-white;
