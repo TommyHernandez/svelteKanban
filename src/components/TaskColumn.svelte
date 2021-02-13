@@ -6,10 +6,9 @@
   export let pos = 0;
   const dispatch = createEventDispatcher();
   function addTask() {
-    let newTask = prompt('Que quieres añadir:');
+    //let newTask = prompt('Que quieres añadir:');
    // taskList = [...taskList, newTask];
-    dispatch('addTask', {
-            task: newTask,
+    dispatch('openModal', {
             pos
         });
   }

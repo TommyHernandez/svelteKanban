@@ -1,6 +1,9 @@
 <script>
   import TaskColumn from "./components/TaskColumn.svelte";
-  import ls from './helpers/localStorageHelper.js';
+  //import ls from './helpers/localStorageHelper.js';
+  import ModalAddTask from "./components/ModalAddTask.svelte";
+  let showModal = false;
+  let columnPositionToSave = 0
   let columns = [
     {
     pos: 0,
@@ -23,24 +26,35 @@
     task: []
   },
 ];
-function handleTask({detail}) {
-  const {task, pos} = detail;
-  const col = columns.find( e => e.pos === pos);
-  col.task = [... col.task, task]
-  columns = columns; 
+
+  function openModal({detail}) {
+    const {pos} = detail;
+    columnPositionToSave = pos;
+    showModal = true;
+  }
+  function saveTask({detail}) {
+    console.log(details);
+    const {task, pos} = detail;
+    const col = columns.find( e => e.pos === pos);
+    col.task = [... col.task, task]
+    columns = columns; 
+    showModal = false;
   }
 </script>
 
 <main>
   <header>
-    <h1>My trello</h1>
+    <h1>My Kanban Board</h1>
     <p>Crea tus tareas y guardalas en local</p>
   </header>
   <section class="board">
     {#each columns as {name, task},index}
-      <TaskColumn name={name} taskList={task} on:addTask={handleTask} pos={index}/>
+      <TaskColumn name={name} taskList={task} on:openModal={openModal} pos={index}/>
     {/each}
   </section>
+  {#if showModal}
+    <ModalAddTask posToSave={columnPositionToSave} on:saveTask={saveTask} on:cancel={() => showModal = false}/>
+  {/if}
   <footer>Pedro T. Hernández</footer>
 </main>
 
